@@ -9,7 +9,7 @@ import { Input, Button, message, Modal, Tooltip } from 'antd';
 import styled from '@emotion/styled';
 import { useMutation } from '@tanstack/react-query';
 import { enterPassPhrase } from '@app/features/settings/passphrase';
-import { SettingOutlined } from '@ant-design/icons';
+import { FaUnlockAlt } from 'react-icons/fa';
 
 const Wrapper = styled.div`
   padding: 2em 0;
@@ -36,6 +36,9 @@ export const EnterPassphrase: React.FC = () => {
         type: 'success',
         content: 'Unlock successfully.',
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     },
     onError: () => {
       messageApi.open({
@@ -76,10 +79,10 @@ export const EnterPassphrase: React.FC = () => {
     <>
       {contextHolder}
       <Tooltip title="Unlock LINSTOR">
-        <Button shape="circle" icon={<SettingOutlined />} onClick={showModal} />
+        <Button shape="circle" icon={<FaUnlockAlt />} onClick={showModal} />
       </Tooltip>
 
-      <Modal title="LINSTOR Pass-Phrase" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Modal title="LINSTOR Pass-Phrase" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={null}>
         <Wrapper>
           <Input.Password
             value={passphrase}
@@ -89,6 +92,7 @@ export const EnterPassphrase: React.FC = () => {
             aria-label="pass-phrase"
             type="password"
             width={100}
+            placeholder="Enter passphrase"
           />
         </Wrapper>
         <Button type="primary" onClick={handleSave}>
